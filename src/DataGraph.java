@@ -23,7 +23,7 @@ public class DataGraph extends Panel {
 
         int[] percentage = dataGraph.calculatePercentages(Integer.parseInt(args[1]),Integer.parseInt(args[3]),Integer.parseInt(args[5]));
 
-        Bars bars = new Bars(percentage[0], percentage[1], percentage[2], image);
+        Bars bars = new Bars(percentage, image);
 
         dataGraph.alterFrame(frame);
 
@@ -65,17 +65,5 @@ public class DataGraph extends Panel {
         percentage[2] = val3 * 100 / all;
 
         return percentage;
-    }
-
-    /**paints background Image to the Frame
-    public void paint(Graphics graphics){
-        graphics.drawImage(image, 0, 0, this);
-
-
-    }**/
-
-    //adjust to size of Image
-    public Dimension getPreferredSize(){
-        return new Dimension(image.getWidth(this), image.getHeight(this));
     }
 }
