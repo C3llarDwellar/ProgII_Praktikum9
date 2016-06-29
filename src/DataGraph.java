@@ -1,9 +1,6 @@
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.RenderedImage;
-import java.net.URL;
 
 /**
  * Created by Edwin on 13/06/2016.
@@ -13,8 +10,6 @@ import java.net.URL;
 public class DataGraph extends Panel {
 
     private Image image;
-
-    private Bars bars;
 
     private DataGraph(Image image){
         this.image = image;
@@ -27,7 +22,8 @@ public class DataGraph extends Panel {
         DataGraph dataGraph = new DataGraph(image);
 
         int[] percentage = dataGraph.calculatePercentages(Integer.parseInt(args[1]),Integer.parseInt(args[3]),Integer.parseInt(args[5]));
-        dataGraph.bars = new Bars(percentage[0], percentage[1], percentage[2]);
+
+        Bars bars = new Bars(percentage[0], percentage[1], percentage[2], image);
 
         dataGraph.alterFrame(frame);
 
@@ -39,7 +35,8 @@ public class DataGraph extends Panel {
             System.out.println("well shit");
         }
 
-        frame.add(dataGraph);
+        //frame.add(dataGraph);
+        frame.add(bars);
         frame.pack();
         frame.setVisible(true);
 
@@ -70,14 +67,12 @@ public class DataGraph extends Panel {
         return percentage;
     }
 
-    //paints background Image to the Frame
+    /**paints background Image to the Frame
     public void paint(Graphics graphics){
         graphics.drawImage(image, 0, 0, this);
-        graphics.drawRect(0, image.getHeight(this) - bars.height1, bars.width, bars.height1);
-        graphics.drawRect(25, image.getHeight(this) - bars.height2, bars.width, bars.height2);
-        graphics.drawRect(50, image.getHeight(this) - bars.height3, bars.width, bars.height3);
 
-    }
+
+    }**/
 
     //adjust to size of Image
     public Dimension getPreferredSize(){
