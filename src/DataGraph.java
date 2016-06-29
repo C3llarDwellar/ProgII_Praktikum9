@@ -14,20 +14,27 @@ public class DataGraph extends Panel {
 
     private Image image;
 
+    private Bars bars;
+
     private DataGraph(Image image){
         this.image = image;
     }
 
     public static void main(String[] args){
+
         Frame frame = new Frame();
         Image image = frame.getToolkit().getImage(args[6]);
         DataGraph dataGraph = new DataGraph(image);
+
+        int[] percentage = dataGraph.calculatePercentages(Integer.parseInt(args[1]),Integer.parseInt(args[3]),Integer.parseInt(args[5]));
+        dataGraph.bars = new Bars(percentage[0], percentage[1], percentage[2]);
+
         dataGraph.alterFrame(frame);
 
         MediaTracker tracker = new MediaTracker(dataGraph);
         tracker.addImage(image, 1);
         try{
-            tracker.waitForID(1);
+            tracker.waitForAll();
         }catch (Exception e){
             System.out.println("well shit");
         }
@@ -36,8 +43,7 @@ public class DataGraph extends Panel {
         frame.pack();
         frame.setVisible(true);
 
-        int[] percentage = dataGraph.calculatePercentages(Integer.parseInt(args[1]),Integer.parseInt(args[3]),Integer.parseInt(args[5]));
-        Bars bars = new Bars(percentage[0], percentage[1], percentage[2]);
+
     }
 
     //initializes new Frame with a GridBaLayout
@@ -67,6 +73,9 @@ public class DataGraph extends Panel {
     //paints background Image to the Frame
     public void paint(Graphics graphics){
         graphics.drawImage(image, 0, 0, this);
+        graphics.drawRect(0, image.getHeight(this) - bars.height1, bars.width, bars.height1);
+        graphics.drawRect(25, image.getHeight(this) - bars.height2, bars.width, bars.height2);
+        graphics.drawRect(50, image.getHeight(this) - bars.height3, bars.width, bars.height3);
 
     }
 

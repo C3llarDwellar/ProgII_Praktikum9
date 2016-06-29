@@ -15,7 +15,7 @@ public class Bars {
 
     public void paint(Graphics bars){
         bars.drawRect(0, 0, this.width, this.height1);
-        bars.drawRect(0, 0, this.width, this.height2);
-        bars.drawRect(0, 0, this.width, this.height3);
+        bars.drawRect(25, 0, this.width, this.height2);
+        bars.drawRect(50, 0, this.width, this.height3);
     }
 }
