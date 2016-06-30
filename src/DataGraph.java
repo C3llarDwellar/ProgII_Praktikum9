@@ -21,9 +21,8 @@ public class DataGraph extends Panel {
         Image image = frame.getToolkit().getImage(args[6]);
         DataGraph dataGraph = new DataGraph(image);
 
-        int[] percentage = dataGraph.calculatePercentages(Integer.parseInt(args[1]),Integer.parseInt(args[3]),Integer.parseInt(args[5]));
-
-        Bars bars = new Bars(percentage, image);
+        Bars bars = new Bars(Integer.parseInt(args[1]), Integer.parseInt(args[3]), Integer.parseInt(args[5]), image);
+        Pie pie = new Pie(Integer.parseInt(args[1]), Integer.parseInt(args[3]), Integer.parseInt(args[5]), image);
 
         dataGraph.alterFrame(frame);
 
@@ -35,12 +34,26 @@ public class DataGraph extends Panel {
             System.out.println("well shit");
         }
 
+        double[] percentage = dataGraph.percentages(Integer.parseInt(args[1]), Integer.parseInt(args[3]), Integer.parseInt(args[5]));
+
         //frame.add(dataGraph);
         frame.add(bars);
+        frame.add(pie);
+        frame.add(new TextArea(
+                "BLUE: " + args[0] + " - " + args[1] + " - " + percentage[0] + "%\n" +
+                "RED: " + args[2] + " - " + args[3] + " - " + percentage[1] + "%\n" +
+                "GREEN: " +args[4] + " - " + args[5] + " - " + percentage[2] +"%", 4, 30
+        ));
         frame.pack();
         frame.setVisible(true);
 
 
+    }
+
+    private double[] percentages(int val1, int val2, int val3){
+        int all = val1 + val2 + val3;
+        double[] percentage = {val1 * 100 / all, val2 * 100 / all, val3 * 100 / all};
+        return percentage;
     }
 
     //initializes new Frame with a GridBaLayout
@@ -55,15 +68,5 @@ public class DataGraph extends Panel {
         });
     }
 
-    //calculates the percentages of the three values
-    private int[] calculatePercentages(int val1, int val2, int val3){
-        int all = val1 + val2 + val3;
-        int[] percentage = {0, 0, 0};
 
-        percentage[0] = val1 * 100 / all;
-        percentage[1] = val2 * 100 / all;
-        percentage[2] = val3 * 100 / all;
-
-        return percentage;
-    }
 }
